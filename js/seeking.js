@@ -4,7 +4,7 @@ const searchPhone = () => {
     // clear data
     searcField.value = "";
     if (searchText == "") {
-        console.log("error");
+        document.getElementById("empty").style.display = "block";
     }
     else {
         // load data
@@ -12,6 +12,7 @@ const searchPhone = () => {
         fetch(url)
             .then(res => res.json())
             .then(data => displaySearchResult(data.data));
+        document.getElementById("empty").style.display = "none";
     }
     console.log(searchText);
 }
@@ -20,8 +21,7 @@ const displaySearchResult = phones => {
     // clear previous result
     searchResult.textContent = "";
     phones.forEach(phone => {
-        // console.log(phone);
-        // creat detail div
+        // create detail 
         const div = document.createElement("div");
         div.classList.add("col");
 
@@ -53,22 +53,24 @@ const showDetails = phone => {
     console.log(phone);
     const details = document.getElementById("details");
     // clear previous details
-    details.textContent = "";
     const div = document.createElement("div");
     div.innerHTML = `
-    <div class="card p-4 border border-secondary border-4 rounded-3">
-  <div>
-  <img src="${phone.image}" class="card-img-top img-fluid w-50 w-lg-60" alt="...">
-  </div>
-  <div class="card-body text-center">
-    <h3><span class="fw-bold">${phone.name}</span></h3>
-    <h4>${phone.slug}</h4>
-    <h4>${phone.releaseDate}</h4>
-    <h4>${phone.mainFeatures.memory}</h4>
-    <h4>${phone.mainFeatures.sensors[0]}</h4>
-    <h4>${phone.others.USB}</h4>
-    <P></p>
-  </div>
+    <div class="card text-center border border-secondary rounded-3 m-3 w-100">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="${phone.image}" class="img-fluid rounded-start " alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h2 class="card-title"><span class="fw-bold">${phone.name}</span></h2>
+                <h4>${phone.slug}</h4>
+                <h4><span class="text-secondary">Release Date:</span> ${phone.releaseDate}</h4>
+                <h4><span class="text-secondary">Feature:</span>${phone.mainFeatures.chipSet}</h4>
+                <h4><span class="text-secondary">Sensor:</span>${phone.mainFeatures.sensors[0]}</h4>
+                <h4>${phone.others.USB}</h4>
+            </div>
+        </div>
+    </div>
 </div>
     `;
     details.appendChild(div);

@@ -1,3 +1,9 @@
 body{
     background-color: rgba(214, 212, 212, 0.61);
 }
+#empty{
+    display: none;
+}
+#null{
+    display: none;
+}
