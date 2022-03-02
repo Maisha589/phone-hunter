@@ -11,6 +11,7 @@ const searchPhone = () => {
         .then(data => {
             if (searchText == "") {
                 document.getElementById("empty").style.display = "block";
+                document.getElementById("error").style.display = "none";
             }
             else {
                 displaySearchResult(data.data.slice(0, 20));
@@ -24,43 +25,59 @@ const displaySearchResult = phones => {
     const searchResult = document.getElementById("phone-container");
     // clear previous result
     searchResult.textContent = "";
-    phones.forEach(phone => {
-        // create detail 
-        const div = document.createElement("div");
-        div.classList.add("col");
+    if (phones.length == 0) {
+        document.getElementById("error").style.display = "block";
 
-        div.innerHTML = `
-        <div class="card shadow-lg h-100 p-3 text-center border border-secondary rounded-3 mb-3">
-          <img class="w-50 p-3" src="${phone.image}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h4 class="card-title"> ${phone.phone_name}</h4>
-            <p class="card-text">${phone.brand}</p>
-            <button onclick="phoneDetail('${phone.slug}')" type="button" class="btn btn-secondary">Details</button>
-          </div>
-        </div>
-    
-        `;
-        searchResult.appendChild(div);
-    })
+
+    }
+
+
+
+    else {
+        phones.forEach(phone => {
+            // create detail 
+            const div = document.createElement("div");
+            div.classList.add("col");
+
+            div.innerHTML = `
+            <div class="card shadow-lg h-100 p-3 text-center border border-secondary rounded-3 mb-3">
+              <img class="w-50 p-3" src="${phone.image}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h4 class="card-title"> ${phone.phone_name}</h4>
+                <p class="card-text">${phone.brand}</p>
+                <button onclick="phoneDetail('${phone.slug}')" type="button" class="btn btn-secondary">Details</button>
+              </div>
+            </div>
+        
+            `;
+
+            searchResult.appendChild(div);
+            document.getElementById("error").style.display = "none";
+        })
+    }
 }
 
 const phoneDetail = phoneId => {
     // console.log(phoneId);
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
-    // console.log(url);
     fetch(url)
         .then(res => res.json())
         .then(data => showDetails(data.data));
 }
 
 const showDetails = phone => {
-    console.log(phone);
+
     const details = document.getElementById("details");
     // clear previous details
-    details.textContent = "";
+    details.innerHTML = "";
 
-    const div = document.createElement("div");
-    div.innerHTML = `
+    if (phone.length == 0) {
+        document.getElementById("details").textContent = "";
+    }
+
+    else {
+        const div = document.createElement("div");
+        div.innerHTML = `
     <div class="card shadow-lg text-center border border-secondary rounded-3 m-3 w-100">
     <div class="row g-0">
         <div class="col-md-4">
@@ -97,5 +114,6 @@ const showDetails = phone => {
     </div>
 </div>
     `;
-    details.appendChild(div);
+        details.appendChild(div);
+    }
 }
