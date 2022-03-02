@@ -12,6 +12,8 @@ const searchPhone = () => {
             if (searchText == "") {
                 document.getElementById("empty").style.display = "block";
                 document.getElementById("error").style.display = "none";
+                document.getElementById("details").textContent = "";
+                document.getElementById("phone-container").textContent = "";
             }
             else {
                 displaySearchResult(data.data.slice(0, 20));
@@ -27,7 +29,8 @@ const displaySearchResult = phones => {
     searchResult.textContent = "";
     if (phones.length == 0) {
         document.getElementById("error").style.display = "block";
-
+        document.getElementById("details").textContent = "";
+        document.getElementById("phone-container").textContent = "";
 
     }
 
@@ -35,6 +38,7 @@ const displaySearchResult = phones => {
 
     else {
         phones.forEach(phone => {
+            document.getElementById("details").textContent = "";
             // create detail 
             const div = document.createElement("div");
             div.classList.add("col");
@@ -69,15 +73,12 @@ const showDetails = phone => {
 
     const details = document.getElementById("details");
     // clear previous details
-    details.innerHTML = "";
+    details.textContent = "";
 
-    if (phone.length == 0) {
-        document.getElementById("details").textContent = "";
-    }
 
-    else {
-        const div = document.createElement("div");
-        div.innerHTML = `
+    // adding details
+    const div = document.createElement("div");
+    div.innerHTML = `
     <div class="card shadow-lg text-center border border-secondary rounded-3 m-3 w-100">
     <div class="row g-0">
         <div class="col-md-4">
@@ -114,6 +115,5 @@ const showDetails = phone => {
     </div>
 </div>
     `;
-        details.appendChild(div);
-    }
+    details.appendChild(div);
 }
