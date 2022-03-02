@@ -74,7 +74,11 @@ const showDetails = phone => {
     const details = document.getElementById("details");
     // clear previous details
     details.textContent = "";
+    const sensorData = phone.mainFeatures.sensors;
+    const sensorShow = sensorData.map((sensor) => sensor + " ");
+    // console.log(sensorData);
 
+    const otherValue = phone.others;
 
     // adding details
     const div = document.createElement("div");
@@ -92,24 +96,13 @@ const showDetails = phone => {
                 <h4><span class="text-secondary">Chip:</span>${phone.mainFeatures.chipSet}</h4>
                 <h4><span class="text-secondary">Display:</span>${phone.mainFeatures.displaySize}</h4>
                 <h4><span class="text-secondary">Memory:</span>${phone.mainFeatures.memory}</h4>
-                <h4><span class="text-secondary"></span>${phone.mainFeatures.sensors[0]}</h4>
-                <h4><span class="text-secondary"></span>${phone.mainFeatures.sensors[1] ? phone.mainFeatures.sensors[1] : 'Not found'}</h4>
-                <h4><span class="text-secondary"></span>${phone.mainFeatures.sensors[2] ? phone.mainFeatures.sensors[2] : 'Not found'}</h4>
-                <h4><span class="text-secondary"></span>${phone.mainFeatures.sensors[3] ? phone.mainFeatures.sensors[3] : 'Not found'}</h4>
-                <h4><span class="text-secondary"></span>${phone.mainFeatures.sensors[4] ? phone.mainFeatures.sensors[4] : 'Not found'}</h4>
-                <h4><span class="text-secondary"></span>${phone.mainFeatures.sensors[5] ? phone.mainFeatures.sensors[5] : 'Not found'}</h4>
-                <h4><span class="text-secondary">Bluetooth:</span>${phone.others.Bluetooth}</h4>
-                <h4></h4>
-                <h4><span class="text-secondary">GPS:</span>${phone.others.GPS}</h4>
-                <h4></h4>
-                <h4><span class="text-secondary">NFC:</span>${phone.others.NFC}</h4>
-                <h4></h4>
-                <h4><span class="text-secondary">Radio:</span>${phone.others.Radio}</h4>
-                <h4></h4>
-                <h4><span class="text-secondary">USB:</span>${phone.others.USB}</h4>
-                <h4></h4>
-                <h4><span class="text-secondary">WLAN:</span>${phone.others.WLAN}</h4>
-                <h4></h4>
+                <h4><span class="text-secondary"></span>${sensorShow}</h4>
+                <h4><span class="text-secondary">Bluetooth:</span>${otherValue?.Bluetooth ? otherValue?.Bluetooth : "Not found"}</h4>
+                <h4><span class="text-secondary">GPS:</span>${otherValue?.GPS ? otherValue?.GPS : "Not found"}</h4>
+                <h4><span class="text-secondary">NFC:</span>${otherValue?.NFC ? otherValue?.NFC : "Not found"}</h4>
+                <h4><span class="text-secondary">Radio:</span>${otherValue?.Radio ? otherValue?.Radio : "Not found"}</h4>
+                <h4><span class="text-secondary">USB:</span>${otherValue?.USB ? otherValue?.USB : "Not found"}</h4>
+                <h4><span class="text-secondary">WLAN:</span>${otherValue?.WLAN ? otherValue?.WLAN : "Not found"}</h4>
             </div>
         </div>
     </div>
